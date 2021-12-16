@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:35:16 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 00:08:51 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:12:25 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,6 @@ t_params	*init_params(int count, char **args)
 		params->n_eat = m_aton(args[5]);
 	return (params);
 }
-
-/*
-** Initialize a list philo objects
-*/
-// t_philo		*init_philos(size_t count)
-// {
-// 	size_t	i;
-// 	t_philo	*philos;
-// 	philos = (t_philo *)malloc(sizeof(t_philo) * (count));
-// 	if (!philos)
-// 	{
-// 		m_errno(ENOMEM);
-// 		return (NULL);
-// 	}
-// 	i = 0;
-// 	while (i < count)
-// 	{
-// 		philos[i].id = i;
-// 		i++;
-// 	}
-// 	return (philos);
-// }
 
 /*
 ** Destory a list fork objects
@@ -156,9 +134,7 @@ t_state		*init_state(t_params *params, t_fork *forks)
 		state[i].last_meal_time = get_current_time();
 		state[i].params = params;
 		state[i].forks = forks;
-		// state[i].current_state = STATE_NONE;
-		state[i].start_time = &start_time;
-		// state[i].is_dead = &is_dead;
+		state[i].start_time = start_time;
 		++i;
 	}
 	return (state);

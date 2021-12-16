@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 01:23:23 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/16 19:44:36 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:28:14 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static char	*state_msg(int state_type)
 
 void		log_state(int state_type, t_state *state)
 {
-	const size_t now = (get_current_time() - *state->start_time) / 1000;
+	const size_t now = (get_current_time() - state->start_time) / 1000;
 	pthread_mutex_lock(&state->params->pmtx);
-	printf("[%07zu] %d %s\n", now, state->id + 1, state_msg(state_type));
+	printf("[%zu] %d %s\n", now, state->id + 1, state_msg(state_type));
 	if (state_type != STATE_DEAD)
 		pthread_mutex_unlock(&state->params->pmtx);
 }

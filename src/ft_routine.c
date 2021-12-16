@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 00:09:43 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:30:25 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,15 @@ void		take_forks(t_state *state)
 	if (state->id % 2 == 0)
 	{
 		pthread_mutex_lock(&state->forks[left].mtx);
-		//state->current_state = STATE_TAKE_FORK;
 		log_state(STATE_TAKE_FORK, state);
 		pthread_mutex_lock(&state->forks[right].mtx);
-		//state->current_state = STATE_TAKE_FORK;
 		log_state(STATE_TAKE_FORK, state);
 	}
 	else
 	{
 		pthread_mutex_lock(&state->forks[right].mtx);
-		//state->current_state = STATE_TAKE_FORK;
 		log_state(STATE_TAKE_FORK, state);
 		pthread_mutex_lock(&state->forks[left].mtx);
-		//state->current_state = STATE_TAKE_FORK;
 		log_state(STATE_TAKE_FORK, state);
 	}
 }
@@ -42,16 +38,8 @@ void		release_forks(t_state *state)
 	const int left = state->id;
 	const int right = (state->id + 1) % state->params->n_philos;
 
-	if (state->id % 2 == 0)
-	{
-		pthread_mutex_unlock(&state->forks[left].mtx);
-		pthread_mutex_unlock(&state->forks[right].mtx);
-	}
-	else
-	{
-		pthread_mutex_unlock(&state->forks[right].mtx);
-		pthread_mutex_unlock(&state->forks[left].mtx);
-	}
+	pthread_mutex_unlock(&state->forks[left].mtx);
+	pthread_mutex_unlock(&state->forks[right].mtx);
 }
 
 void		ro_eat(t_state *state)
@@ -82,7 +70,7 @@ void		*routine(void *args)
 	n_eat = 0;
 	if (state->params->must_eat)
 	{
-		while (n_eat < state->params->n_eat /* && !(*state->is_dead) */)
+		while (n_eat < state->params->n_eat)
 		{
 			ro_eat(state);
 			n_eat++;
@@ -92,7 +80,7 @@ void		*routine(void *args)
 		state->finished_all_meals = n_eat == state->params->n_eat;
 	} else
 	{
-		while (true /*!(*state->is_dead)*/)
+		while (true)
 		{
 			ro_eat(state);
 			ro_sleep(state);
