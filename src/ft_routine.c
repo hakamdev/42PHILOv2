@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/16 20:19:45 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:09:43 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ void		release_forks(t_state *state)
 
 void		ro_eat(t_state *state)
 {
-	const size_t count = state->params->n_philos;
-
 	take_forks(state);
 	state->last_meal_time = get_current_time();
-	//state->current_state = STATE_EATING;
 	log_state(STATE_EATING, state);
 	m_sleep(state->params->t_eat);
 	release_forks(state);
@@ -68,23 +65,15 @@ void		ro_eat(t_state *state)
 
 void		ro_sleep(t_state *state)
 {
-	const size_t count = state->params->n_philos;
-
-	//state->current_state = STATE_SLEEPING;
 	log_state(STATE_SLEEPING, state);
 	m_sleep(state->params->t_sleep);
 }
 
 void		ro_think(t_state *state)
 {
-	//state->current_state = STATE_THINKING;
 	log_state(STATE_THINKING, state);
 }
 
-/*
-** Routine...
-** prototype: void *(*start_routine)(void *)
-*/
 void		*routine(void *args)
 {
 	t_state *state = (t_state *)args;

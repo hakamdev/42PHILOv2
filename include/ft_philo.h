@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:01:12 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/16 18:49:32 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:09:13 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			start_supervisor_thread(t_state *state);
 int			start_philo_machine(t_state *state);
 
 int			destroy_all(t_params *params, t_fork *forks);
-void		destroy_forks(t_fork *forks, int last_index);
+void		destroy_forks(t_fork *forks, size_t last_index);
 
 void		*routine(void *params);
 void		*super_routine(void *params);

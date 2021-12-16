@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:35:16 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/16 20:16:22 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:08:51 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_params	*init_params(int count, char **args)
 /*
 ** Destory a list fork objects
 */
-void		destroy_forks(t_fork *forks, int last_index)
+void		destroy_forks(t_fork *forks, size_t last_index)
 {
 	size_t		i;
 
