@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_number.c                                     :+:      :+:    :+:   */
+/*   ft_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 21:03:29 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 17:28:36 by ehakam           ###   ########.fr       */
+/*   Created: 2021/12/17 17:37:38 by ehakam            #+#    #+#             */
+/*   Updated: 2021/12/17 17:39:39 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_philo.h"
 
-bool	m_is_number(char *arg)
+void	delete_forks(t_fork *forks, size_t last_index)
 {
-	int	i;
+	size_t	i;
 
-	if (!arg)
-		return (false);
 	i = 0;
-	while (arg[i] == ' ')
-		i++;
-	if (arg[i] == '+')
-		i++;
-	if (!(arg[i] >= '0' && arg[i] <= '9'))
-		return (false);
-	while (arg[i] >= '0' && arg[i] <= '9')
-		i++;
-	while (arg[i] == ' ')
-		i++;
-	if (arg[i] != '\0')
-		return (false);
-	return (true);
+	while (i < last_index)
+		pthread_mutex_destroy(&forks[i++].mtx);
+	free(forks);
+}
+
+int	delete_all(t_params *params, t_fork *forks)
+{
+	int		i;
+	size_t	count;
+
+	i = 0;
+	count = 0;
+	if (params)
+	{
+		count = params->n_philos;
+		pthread_mutex_destroy(&params->pmtx);
+		free(params);
+	}
+	if (forks)
+		delete_forks(forks, count);
+	return (0);
 }

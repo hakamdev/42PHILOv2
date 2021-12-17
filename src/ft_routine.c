@@ -6,108 +6,93 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 17:03:05 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 19:44:28 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_philo.h"
 
-// void		take_forks(t_state *state)
-// {
-// 	// const int left = state->id;
-// 	// const int right = (state->id + 1) % state->params->n_philos;
-// 	if (state->id % 2 == 0)
-// 	{
-// 		pthread_mutex_lock(&state->forks[state->id].mtx);
-// 		log_state(STATE_TAKE_FORK, state);
-// 		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
-// 		log_state(STATE_TAKE_FORK, state);
-// 	}
-// 	else
-// 	{
-// 		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
-// 		log_state(STATE_TAKE_FORK, state);
-// 		pthread_mutex_lock(&state->forks[state->id].mtx);
-// 		log_state(STATE_TAKE_FORK, state);
-// 	}
-// }
-
-// void		release_forks(t_state *state)
-// {
-// 	const int left = state->id;
-// 	const int right = (state->id + 1) % state->params->n_philos;
-
-// 	pthread_mutex_unlock(&state->forks[left].mtx);
-// 	pthread_mutex_unlock(&state->forks[right].mtx);
-// }
-
-// void		ro_eat(t_state *state)
-// {
-// 	take_forks(state);
-// 	state->last_meal_time = get_current_time();
-// 	log_state(STATE_EATING, state);
-// 	m_sleep(state->params->t_eat);
-// 	release_forks(state);
-// }
-
-// void		ro_sleep(t_state *state)
-// {
-// 	log_state(STATE_SLEEPING, state);
-// 	m_sleep(state->params->t_sleep);
-// }
-
-// void		ro_think(t_state *state)
-// {
-// 	log_state(STATE_THINKING, state);
-// }
-
-void		*routine(void *args)
+bool	total_meals_reached(t_state *state)
 {
-	t_state *state = (t_state *)args;
+	size_t	i;
+
+	i = 0;
+	while (i < state->params->n_philos)
+		if (!state[i++].finished_all_meals)
+			return (false);
+	return (true);
+}
+
+void	routine_must_eat(t_state *state, bool *is_first_iter)
+{
 	size_t	n_eat;
 
 	n_eat = 0;
-	if (state->params->must_eat)
+	if (is_first_iter && state->id % 2 != 0)
+		m_sleep(state->params->t_eat / 2);
+	while (n_eat < state->params->n_eat)
 	{
-		while (n_eat < state->params->n_eat)
-		{
-			ro_eat(state);
-			n_eat++;
-			ro_sleep(state);
-			ro_think(state);
-		}
-		state->finished_all_meals = n_eat == state->params->n_eat;
-	} else
-	{
-		while (true)
-		{
-			ro_eat(state);
-			ro_sleep(state);
-			ro_think(state);
-		}
+		ro_eat(state);
+		n_eat++;
+		ro_sleep(state);
+		ro_think(state);
+		*is_first_iter = false;
 	}
-	return state;
+	state->finished_all_meals = n_eat == state->params->n_eat;
 }
 
-void		*super_routine(void *args)
+void	routine_default(t_state *state, bool *is_first_iter)
+{
+	if (is_first_iter && state->id % 2 != 0)
+		m_sleep(state->params->t_eat / 2);
+	while (true)
+	{
+		ro_eat(state);
+		ro_sleep(state);
+		ro_think(state);
+		*is_first_iter = false;
+	}
+}
+
+void	*routine(void *args)
+{
+	t_state	*state;
+	size_t	n_eat;
+	bool	is_first_iter;
+
+	n_eat = 0;
+	is_first_iter = true;
+	state = (t_state *)args;
+	if (state->params->must_eat)
+		routine_must_eat(state, &is_first_iter);
+	else
+		routine_default(state, &is_first_iter);
+	return (state);
+}
+
+void	*super_routine(void *args)
 {
 	size_t		i;
-	t_state *state = (t_state *)args;
+	t_state		*state;
 
 	i = 0;
-	usleep(100);
+	state = (t_state *)args;
+	usleep(1000);
 	while (i < state->params->n_philos)
 	{
 		if (get_elapsed_since(state[i].last_meal_time) >= state->params->t_die)
-			{
-				if (!state[i].finished_all_meals)
-					log_state(STATE_DEAD, &state[i]);
-				break;
-			}
+		{
+			log_death(&state[i]);
+			break ;
+		}
 		++i;
 		if (i == state->params->n_philos)
-			usleep(100);
+		{
+			if (state->params->must_eat && total_meals_reached(state))
+				break ;
+			usleep(1000);
+		}
 		i %= state->params->n_philos;
 	}
-	return state;
+	return (state);
 }

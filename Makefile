@@ -6,7 +6,7 @@
 #    By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 17:10:26 by ehakam            #+#    #+#              #
-#    Updated: 2021/12/17 00:08:10 by ehakam           ###   ########.fr        #
+#    Updated: 2021/12/17 19:48:37 by ehakam           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME	= philo
 all: $(NAME)
 
 $(NAME): $(SRC)
-	@$(CC) $(WFLAGS) $(DEBUG) $(SRC) -o $(NAME)
+	@$(CC) $(WFLAGS) $(SRC) -o $(NAME) -O3
 
 clean:
 

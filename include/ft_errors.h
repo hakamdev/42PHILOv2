@@ -6,15 +6,16 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:08:28 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/14 21:04:07 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 17:15:21 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_ERRORS_H
 # define FT_ERRORS_H
 
-#include <stdbool.h>
-#include <stdio.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <unistd.h>
 
 # define EVOID -1
 # define ENOERROR 0
@@ -41,7 +42,7 @@
 # define MSG_EARGS "Arguments not valid\n"
 
 int		m_errno(int errnoval);
-bool 	m_is_error(void);
+bool	m_is_error(void);
 int		m_put_error(void);
 
 #endif

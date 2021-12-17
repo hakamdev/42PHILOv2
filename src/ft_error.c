@@ -6,16 +6,15 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:57 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/14 21:03:26 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 17:28:06 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_errors.h"
 
-
-int		m_errno(int errnoval)
+int	m_errno(int errnoval)
 {
-	static int errno;
+	static int	errno;
 
 	if (errnoval != EVOID)
 		errno = errnoval;
@@ -27,24 +26,24 @@ bool	m_is_error(void)
 	return (m_errno(EVOID) != ENOERROR);
 }
 
-int		m_put_error()
+int	m_put_error(void)
 {
-	// TODO: change
 	if (m_errno(EVOID) == ENOERROR)
 		return (0);
+	write(2, "Error\n", 6);
 	if (m_errno(EVOID) == ENOMEM)
-		dprintf(2, "Error\n%s", MSG_ENOMEM);
+		write(2, MSG_ENOMEM, 26);
 	else if (m_errno(EVOID) == EMTXINIT)
-		dprintf(2, "Error\n%s", MSG_EMTXINIT);
+		write(2, MSG_EMTXINIT, 21);
 	else if (m_errno(EVOID) == EMTXLOCK)
-		dprintf(2, "Error\n%s", MSG_EMTXLOCK);
+		write(2, MSG_EMTXLOCK, 21);
 	else if (m_errno(EVOID) == EMTXUNLCK)
-		dprintf(2, "Error\n%s", MSG_EMTXUNLCK);
+		write(2, MSG_EMTXUNLCK, 23);
 	else if (m_errno(EVOID) == EMTXDEST)
-		dprintf(2, "Error\n%s", MSG_EMTXDEST);
+		write(2, MSG_EMTXDEST, 24);
 	else if (m_errno(EVOID) == ETRDINIT)
-		dprintf(2, "Error\n%s", MSG_ETRDINIT);
+		write(2, MSG_ETRDINIT, 19);
 	else if (m_errno(EVOID) == EARGS)
-		dprintf(2, "Error\n%s", MSG_EARGS);
+		write(2, MSG_EARGS, 20);
 	return (1);
 }
