@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 19:44:28 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 21:42:35 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	routine_must_eat(t_state *state, bool *is_first_iter)
 		ro_think(state);
 		*is_first_iter = false;
 	}
-	state->finished_all_meals = n_eat == state->params->n_eat;
+	state->finished_all_meals = true;
 }
 
 void	routine_default(t_state *state, bool *is_first_iter)
@@ -77,21 +77,20 @@ void	*super_routine(void *args)
 
 	i = 0;
 	state = (t_state *)args;
-	usleep(1000);
 	while (i < state->params->n_philos)
 	{
+		if (i == 0)
+		{
+			usleep(1000);
+			if (state->params->must_eat && total_meals_reached(state))
+				break ;
+		}
 		if (get_elapsed_since(state[i].last_meal_time) >= state->params->t_die)
 		{
 			log_death(&state[i]);
 			break ;
 		}
 		++i;
-		if (i == state->params->n_philos)
-		{
-			if (state->params->must_eat && total_meals_reached(state))
-				break ;
-			usleep(1000);
-		}
 		i %= state->params->n_philos;
 	}
 	return (state);
