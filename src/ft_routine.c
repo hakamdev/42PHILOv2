@@ -6,60 +6,60 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 02:02:10 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 17:03:05 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_philo.h"
 
-void		take_forks(t_state *state)
-{
-	// const int left = state->id;
-	// const int right = (state->id + 1) % state->params->n_philos;
-	if (state->id % 2 == 0)
-	{
-		pthread_mutex_lock(&state->forks[state->id].mtx);
-		log_state(STATE_TAKE_FORK, state);
-		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
-		log_state(STATE_TAKE_FORK, state);
-	}
-	else
-	{
-		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
-		log_state(STATE_TAKE_FORK, state);
-		pthread_mutex_lock(&state->forks[state->id].mtx);
-		log_state(STATE_TAKE_FORK, state);
-	}
-}
+// void		take_forks(t_state *state)
+// {
+// 	// const int left = state->id;
+// 	// const int right = (state->id + 1) % state->params->n_philos;
+// 	if (state->id % 2 == 0)
+// 	{
+// 		pthread_mutex_lock(&state->forks[state->id].mtx);
+// 		log_state(STATE_TAKE_FORK, state);
+// 		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
+// 		log_state(STATE_TAKE_FORK, state);
+// 	}
+// 	else
+// 	{
+// 		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
+// 		log_state(STATE_TAKE_FORK, state);
+// 		pthread_mutex_lock(&state->forks[state->id].mtx);
+// 		log_state(STATE_TAKE_FORK, state);
+// 	}
+// }
 
-void		release_forks(t_state *state)
-{
-	const int left = state->id;
-	const int right = (state->id + 1) % state->params->n_philos;
+// void		release_forks(t_state *state)
+// {
+// 	const int left = state->id;
+// 	const int right = (state->id + 1) % state->params->n_philos;
 
-	pthread_mutex_unlock(&state->forks[left].mtx);
-	pthread_mutex_unlock(&state->forks[right].mtx);
-}
+// 	pthread_mutex_unlock(&state->forks[left].mtx);
+// 	pthread_mutex_unlock(&state->forks[right].mtx);
+// }
 
-void		ro_eat(t_state *state)
-{
-	take_forks(state);
-	state->last_meal_time = get_current_time();
-	log_state(STATE_EATING, state);
-	m_sleep(state->params->t_eat);
-	release_forks(state);
-}
+// void		ro_eat(t_state *state)
+// {
+// 	take_forks(state);
+// 	state->last_meal_time = get_current_time();
+// 	log_state(STATE_EATING, state);
+// 	m_sleep(state->params->t_eat);
+// 	release_forks(state);
+// }
 
-void		ro_sleep(t_state *state)
-{
-	log_state(STATE_SLEEPING, state);
-	m_sleep(state->params->t_sleep);
-}
+// void		ro_sleep(t_state *state)
+// {
+// 	log_state(STATE_SLEEPING, state);
+// 	m_sleep(state->params->t_sleep);
+// }
 
-void		ro_think(t_state *state)
-{
-	log_state(STATE_THINKING, state);
-}
+// void		ro_think(t_state *state)
+// {
+// 	log_state(STATE_THINKING, state);
+// }
 
 void		*routine(void *args)
 {
