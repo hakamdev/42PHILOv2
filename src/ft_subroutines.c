@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 17:02:40 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 19:23:25 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 20:10:34 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@ void	take_forks(t_state *state)
 {
 	pthread_mutex_lock(&state->forks[state->id].mtx);
 	log_state(STATE_TAKE_FORK, state);
-	pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
+	pthread_mutex_lock(
+		&state->forks[(state->id + 1) % state->params->n_philos].mtx
+		);
 	log_state(STATE_TAKE_FORK, state);
 }
 
 void	release_forks(t_state *state)
 {
 	pthread_mutex_unlock(&state->forks[state->id].mtx);
-	pthread_mutex_unlock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
+	pthread_mutex_unlock(
+		&state->forks[(state->id + 1) % state->params->n_philos].mtx
+		);
 }
 
 void	ro_eat(t_state *state)
