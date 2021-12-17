@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:35:16 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 00:12:25 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 01:16:19 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ t_params	*init_params(int count, char **args)
 	}
 	params->must_eat = count == 6;
 	params->n_philos = m_aton(args[1]);
-	params->t_die = m_aton(args[2]) * 1000;
-	params->t_eat = m_aton(args[3])  * 1000;
-	params->t_sleep = m_aton(args[4]) * 1000;
+	params->t_die = m_aton(args[2]);
+	params->t_eat = m_aton(args[3]);
+	params->t_sleep = m_aton(args[4]);
 	if (params->must_eat)
 		params->n_eat = m_aton(args[5]);
 	return (params);
@@ -115,7 +115,7 @@ t_state		*init_state(t_params *params, t_fork *forks)
 	size_t		i;
 	t_state		*state;
 	bool		is_dead;
-	useconds_t	start_time;
+	size_t	start_time;
 	
 	state = (t_state *)malloc(sizeof(t_state) * params->n_philos);
 	if (!state)

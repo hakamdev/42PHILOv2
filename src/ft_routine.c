@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 00:30:25 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 02:02:10 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,20 @@
 
 void		take_forks(t_state *state)
 {
-	const int left = state->id;
-	const int right = (state->id + 1) % state->params->n_philos;
-
+	// const int left = state->id;
+	// const int right = (state->id + 1) % state->params->n_philos;
 	if (state->id % 2 == 0)
 	{
-		pthread_mutex_lock(&state->forks[left].mtx);
+		pthread_mutex_lock(&state->forks[state->id].mtx);
 		log_state(STATE_TAKE_FORK, state);
-		pthread_mutex_lock(&state->forks[right].mtx);
+		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
 		log_state(STATE_TAKE_FORK, state);
 	}
 	else
 	{
-		pthread_mutex_lock(&state->forks[right].mtx);
+		pthread_mutex_lock(&state->forks[(state->id + 1) % state->params->n_philos].mtx);
 		log_state(STATE_TAKE_FORK, state);
-		pthread_mutex_lock(&state->forks[left].mtx);
+		pthread_mutex_lock(&state->forks[state->id].mtx);
 		log_state(STATE_TAKE_FORK, state);
 	}
 }
@@ -96,6 +95,7 @@ void		*super_routine(void *args)
 	t_state *state = (t_state *)args;
 
 	i = 0;
+	usleep(100);
 	while (i < state->params->n_philos)
 	{
 		if (get_elapsed_since(state[i].last_meal_time) >= state->params->t_die)
@@ -105,6 +105,8 @@ void		*super_routine(void *args)
 				break;
 			}
 		++i;
+		if (i == state->params->n_philos)
+			usleep(100);
 		i %= state->params->n_philos;
 	}
 	return state;

@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:01:12 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 00:09:13 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:54:35 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void		destroy_forks(t_fork *forks, size_t last_index);
 void		*routine(void *params);
 void		*super_routine(void *params);
 
-useconds_t	get_current_time();
-useconds_t	get_elapsed_since(useconds_t usec);
-useconds_t	get_time_diff(useconds_t new_usec, useconds_t old_usec);
-void		m_sleep(useconds_t usec);
+size_t	get_current_time();
+size_t	get_elapsed_since(size_t usec);
+size_t	get_time_diff(size_t new_usec, size_t old_usec);
+void		m_sleep(size_t usec);
 
 void	log_state(int state_type, t_state *state);
 

@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:37:17 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 00:12:13 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:53:34 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 typedef struct	s_params
 {
 	size_t	n_philos;
-	useconds_t	t_die;
-	useconds_t	t_eat;
-	useconds_t	t_sleep;
+	size_t	t_die;
+	size_t	t_eat;
+	size_t	t_sleep;
 	bool	must_eat;
 	size_t	n_eat;
 	pthread_mutex_t	pmtx;
@@ -39,8 +39,8 @@ typedef struct	s_state
 	int			id;
 	bool		finished_all_meals;
 	pthread_t	philo_thread;
-	useconds_t	last_meal_time;
-	useconds_t	start_time;
+	size_t	last_meal_time;
+	size_t	start_time;
 	t_params	*params;
 	t_fork		*forks;
 	
