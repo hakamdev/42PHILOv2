@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 17:37:38 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 17:39:39 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 20:20:35 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	delete_forks(t_fork *forks, size_t last_index)
 	free(forks);
 }
 
-int	delete_all(t_params *params, t_fork *forks)
+void	delete_all(t_params *params, t_fork *forks)
 {
 	int		i;
 	size_t	count;
@@ -37,5 +37,4 @@ int	delete_all(t_params *params, t_fork *forks)
 	}
 	if (forks)
 		delete_forks(forks, count);
-	return (0);
 }

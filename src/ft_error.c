@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:57 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 17:28:06 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 20:32:26 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ int	m_put_error(void)
 		write(2, MSG_ETRDINIT, 19);
 	else if (m_errno(EVOID) == EARGS)
 		write(2, MSG_EARGS, 20);
+	else if (m_errno(ETRJOIN) == EARGS)
+		write(2, MSG_ETRJOIN, 22);
 	return (1);
 }

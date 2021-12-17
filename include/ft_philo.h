@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:01:12 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 19:59:18 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 20:18:38 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		m_sleep(size_t msec);
 t_params	*init_params(int count, char **args);
 t_state		*init_state(t_params *params, t_fork *forks);
 t_fork		*init_forks(size_t count);
-int			delete_all(t_params *params, t_fork *forks);
+void		delete_all(t_params *params, t_fork *forks);
 void		delete_forks(t_fork *forks, size_t last_index);
 
 /*

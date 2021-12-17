@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:08:28 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 17:15:21 by ehakam           ###   ########.fr       */
+/*   Updated: 2021/12/17 20:32:11 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@
 # define MSG_EMTXDEST "Failed to destroy mutex\n"
 
 # define ETRDINIT 105
-# define MSG_ETRDINIT "Failed init thread\n"
+# define MSG_ETRDINIT "Failed to init thread\n"
 
 # define EARGS 106
 # define MSG_EARGS "Arguments not valid\n"
+
+# define ETRJOIN 107
+# define MSG_ETRJOIN "Failed to join thread\n"
 
 int		m_errno(int errnoval);
 bool	m_is_error(void);
