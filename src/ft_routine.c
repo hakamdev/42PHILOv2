@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 21:42:35 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/01/03 17:08:54 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ void	routine_default(t_state *state, bool *is_first_iter)
 void	*routine(void *args)
 {
 	t_state	*state;
-	size_t	n_eat;
 	bool	is_first_iter;
 
-	n_eat = 0;
 	is_first_iter = true;
 	state = (t_state *)args;
 	if (state->params->must_eat)

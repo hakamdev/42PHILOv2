@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:35:16 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 21:34:07 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/01/03 17:02:45 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	start_supervisor_thread(t_state *state)
 	if (pthread_join(supervisor, NULL) != 0)
 	{
 		m_errno(ETRJOIN);
-		return (0);
+		return (1);
 	}
 	return (0);
 }
