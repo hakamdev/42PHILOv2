@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:01:12 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 20:18:38 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/02/10 22:09:28 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ void		log_death(t_state *state);
 ** Time Functions
 */
 size_t		get_current_time(void);
-size_t		get_elapsed_since(size_t msec);
+size_t		elapsed(size_t msec);
 void		m_sleep(size_t msec);
 
 /*
 ** Init/Destructor Functions
 */
+bool		init_mutex(pthread_mutex_t *mtx);
 t_params	*init_params(int count, char **args);
 t_state		*init_state(t_params *params, t_fork *forks);
+t_state		*init_state2(t_state *state, t_params *params, t_fork *forks);
 t_fork		*init_forks(size_t count);
 void		delete_all(t_params *params, t_fork *forks);
 void		delete_forks(t_fork *forks, size_t last_index);
@@ -53,6 +55,8 @@ int			start_philo_machine(t_state *state);
 /*
 ** Routine Functions
 */
+bool		total_meals_reached(t_state *state);
+bool		super_routine_check_meals(t_state *state);
 void		*routine(void *args);
 void		*super_routine(void *args);
 void		ro_eat(t_state *state);

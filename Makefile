@@ -6,7 +6,7 @@
 #    By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 17:10:26 by ehakam            #+#    #+#              #
-#    Updated: 2022/02/10 15:41:09 by ehakam           ###   ########.fr        #
+#    Updated: 2022/02/10 22:04:35 by ehakam           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC		=	src/ft_aton.c \
 			src/ft_routine.c \
 			src/ft_state.c \
 			src/ft_subroutines.c \
-			src/ft_time.c
+			src/ft_time.c \
+			src/ft_utils.c
 NAME	= philo
 
 all: $(NAME)

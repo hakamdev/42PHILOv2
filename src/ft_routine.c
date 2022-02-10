@@ -6,22 +6,11 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2022/01/03 17:08:54 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/02/10 22:21:38 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_philo.h"
-
-bool	total_meals_reached(t_state *state)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < state->params->n_philos)
-		if (!state[i++].finished_all_meals)
-			return (false);
-	return (true);
-}
 
 void	routine_must_eat(t_state *state, bool *is_first_iter)
 {
@@ -38,7 +27,7 @@ void	routine_must_eat(t_state *state, bool *is_first_iter)
 		ro_think(state);
 		*is_first_iter = false;
 	}
-	state->finished_all_meals = true;
+	state->finish_meals = true;
 }
 
 void	routine_default(t_state *state, bool *is_first_iter)
@@ -68,6 +57,14 @@ void	*routine(void *args)
 	return (state);
 }
 
+bool	super_routine_check_meals(t_state *state)
+{
+	usleep(1000);
+	if (state->params->must_eat && total_meals_reached(state))
+		return (true);
+	return (false);
+}
+
 void	*super_routine(void *args)
 {
 	size_t		i;
@@ -77,19 +74,22 @@ void	*super_routine(void *args)
 	state = (t_state *)args;
 	while (i < state->params->n_philos)
 	{
-		if (i == 0)
-		{
-			usleep(1000);
-			if (state->params->must_eat && total_meals_reached(state))
-				break ;
-		}
-		if (get_elapsed_since(state[i].last_meal_time) >= state->params->t_die)
-		{
-			log_death(&state[i]);
+		if (i == 0 && super_routine_check_meals(state))
 			break ;
+		pthread_mutex_lock(&state[i].eating_mtx);
+		if (!state[i].is_eating)
+		{
+			// printf("%d EATING = %s\n", state[i].id + 1, state[i].is_eating ? "true" : "false");
+			pthread_mutex_unlock(&state[i].eating_mtx);
+			if (elapsed(state[i].last_meal_t) >= state->params->t_die)
+			{
+				log_death(&state[i]);
+				break ;
+			}
 		}
-		++i;
-		i %= state->params->n_philos;
+		else
+			pthread_mutex_unlock(&state[i].eating_mtx);
+		i = (i + 1) % state->params->n_philos;
 	}
 	return (state);
 }

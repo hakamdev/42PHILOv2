@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 17:02:40 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 20:10:34 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/02/10 22:14:15 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,17 @@ void	release_forks(t_state *state)
 void	ro_eat(t_state *state)
 {
 	take_forks(state);
-	state->last_meal_time = get_current_time();
+	state->last_meal_t = get_current_time();
+	pthread_mutex_lock(&state->eating_mtx);
+	state->is_eating = true;
+	pthread_mutex_unlock(&state->eating_mtx);
 	log_state(STATE_EATING, state);
 	m_sleep(state->params->t_eat);
+	pthread_mutex_lock(&state->eating_mtx);
+	state->is_eating = false;
+	pthread_mutex_unlock(&state->eating_mtx);
 	release_forks(state);
+	
 }
 
 void	ro_sleep(t_state *state)

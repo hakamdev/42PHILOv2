@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:37:17 by ehakam            #+#    #+#             */
-/*   Updated: 2021/12/17 20:04:40 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/02/10 22:00:18 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ typedef struct s_fork
 
 typedef struct s_state
 {
-	int			id;
-	bool		finished_all_meals;
-	pthread_t	philo_thread;
-	size_t		last_meal_time;
-	size_t		start_time;
-	t_params	*params;
-	t_fork		*forks;
+	int				id;
+	bool			finish_meals;
+	pthread_t		philo_thread;
+	size_t			last_meal_t;
+	size_t			start_t;
+	bool			is_eating;
+	pthread_mutex_t	eating_mtx;
+	t_params		*params;
+	t_fork			*forks;
 }				t_state;
 
 #endif
