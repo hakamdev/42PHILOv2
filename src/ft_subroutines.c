@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 17:02:40 by ehakam            #+#    #+#             */
-/*   Updated: 2022/02/10 22:14:15 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/02/11 20:04:22 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	ro_eat(t_state *state)
 	state->is_eating = false;
 	pthread_mutex_unlock(&state->eating_mtx);
 	release_forks(state);
-	
 }
 
 void	ro_sleep(t_state *state)

@@ -6,7 +6,7 @@
 /*   By: ehakam <ehakam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:55:48 by ehakam            #+#    #+#             */
-/*   Updated: 2022/02/10 22:21:38 by ehakam           ###   ########.fr       */
+/*   Updated: 2022/02/11 20:04:01 by ehakam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	*super_routine(void *args)
 		pthread_mutex_lock(&state[i].eating_mtx);
 		if (!state[i].is_eating)
 		{
-			// printf("%d EATING = %s\n", state[i].id + 1, state[i].is_eating ? "true" : "false");
 			pthread_mutex_unlock(&state[i].eating_mtx);
 			if (elapsed(state[i].last_meal_t) >= state->params->t_die)
 			{
